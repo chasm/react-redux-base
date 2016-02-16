@@ -32,6 +32,14 @@ npm i react-addons-pure-render-mixin react-redux react-router redux watchify -S
 npm i chai chai-enzyme cheerio enzyme jsdom mocha react-addons-test-utils -D
 ```
 
+In `.gitignore` (all we need for the moment):
+
+```
+.DS_Store
+node_modules
+public/js/app.js
+```
+
 In `public/index.html`:
 
 ```html
