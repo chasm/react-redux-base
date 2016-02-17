@@ -4,10 +4,9 @@ A base on which to build React/Redux apps.
 
 ## Building this from scratch
 
-To build this from scratch:
+If you just want to clone this repo and run the app, then you can skip down to the section below on running it. If you want to build it from scratch, follow these instructions (no need to clone&mdash;use your own repo):
 
 ```sh
-npm i http-server -g
 npm init -y
 mkdir public
 mkdir src
@@ -182,15 +181,29 @@ Finally, add this to the `.eslintrc` file:
 }
 ```
 
+## Running the base app
+
+If you cloned the repo, first you'll need to install the dependencies:
+
+```sh
+npm install
+```
+
+You'll also need to make sure you have `http-server`:
+
+```sh
+npm i http-server -g
+```
+
 Now we can run the test:
 
 ```sh
 npm test
 ```
 
-And you should see one passing test.
+And you should see one passing test. It's not very exciting, but you can build on it.
 
-We can also build our app and run watchify to watch it:
+We can also build our app and run watchify to watch it.
 
 ```sh
 npm run build
