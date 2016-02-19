@@ -1,18 +1,22 @@
-import React, { Component } from 'react' // import React and Component from inside React
+import React, { Component } from 'react'
 
-import Board from './Board.jsx'  // import our own Board component from this folder
+import Board from './Board.jsx'
 
-// Create our top-level App component by subclassing React's Component
 class App extends Component {
 
-  // React calls render to render our component to the virtual DOM
-  // Here we just return a <div class="app"> with whatever our Board renders
-  // inside of it
   render () {
+    // Add the header
     return <div className='app'>
+      <header>
+        <h1>
+          <span className='tic'>Tic</span>
+          <span className='tac'>Tac</span>
+          <span className='toe'>Toe</span>
+        </h1>
+      </header>
       <Board/>
     </div>
   }
 }
 
-export default App // export the App so we can import it into index.js
+export default App
