@@ -16,6 +16,6 @@ describe('<App/>', () => {
   it('renders a div containing "App"', () => {
     const wrapper = shallow(<App/>)
 
-    expect(wrapper.find('div')).to.have.text('App!')
+    expect(wrapper.find('div')).to.have.className('app')
   })
 })
