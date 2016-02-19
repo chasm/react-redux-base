@@ -16,7 +16,10 @@ button:hover {
 
 header h1 {
   box-sizing: content-box;
+  font-size: 3rem;
+  font-weight: normal;
   margin: 5rem auto 1rem;
+  text-align: center;
   width: 30rem;
 }
 
