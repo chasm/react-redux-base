@@ -1,30 +1,32 @@
-import React, { Component } from 'react' // Grab Component from *inside* React
+import React, { Component, PropTypes } from 'react'
 
-// We could do the above like this as well:
-// import React from 'react'
-// const { Component } = React
-// or
-// const Component = React.Component
-
-// Create a Square component by subclassing React's Component class
 class Square extends Component {
 
-  // Handle clicks by just calling the click callback passed in to this.props
   handleClick () {
     this.props.clickCb()
   }
 
-  // The render method is called by React to render the square
-  // We return JSX which gets converted to JS and then to DOM elements
   render () {
-    let { player } = this.props // get the player property out of this.props
+    const { player, win } = this.props // win is a boolean
 
-    return <div
-      className={player}  // use the player (x or o) as the CSS class
-      onClick={this.handleClick.bind(this)} // call this.handleClick on click
-    >{player}</div> // put an x or an o in the square, as necessary
+    const css = win ? `${player} win` : player // on a win, add 'win' class
+
+    return player
+      ? <div className={css}>{player}</div> // if played, no need to listen for clicks
+      : <div onClick={this.handleClick.bind(this)}/> // if unplayed, listen for clicks
   }
 }
 
-// Export the Square so we can import it into Board
+// We will talk more about this next class, but we can tell React what the
+// *types* of the props are, and whether they are required
+Square.propTypes = {
+  clickCb: PropTypes.func,    // clickCB is a function
+  player: PropTypes.string,   // player is an optional string
+  win: PropTypes.bool         // win is an optional boolean
+}
+
+Square.defaultProps = {
+  win: false // BUT, we set win to default to false
+}
+
 export default Square
