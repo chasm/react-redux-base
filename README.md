@@ -77,6 +77,18 @@ document.body.appendChild(app)
 ReactDOM.render(<App/>, app)
 ```
 
+In `src/components/App.jsx`:
+
+```jsx
+import React from 'react'
+
+const App = ({}, {}) => {
+  return <div>App!</div>
+}
+
+export default App
+```
+
 In `test/mocha.opts`:
 
 ```
