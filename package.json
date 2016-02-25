@@ -4,8 +4,8 @@
   "description": "A base on which to build React/Redux apps.",
   "main": "src/index.js",
   "scripts": {
-    "build-js": "watchify src/index.js -o public/js/app.js -v",
-    "build": "npm run build-js",
+    "watch": "watchify src/index.js -o public/js/app.js -v",
+    "build": "browserify src/index.js -o public/js/app.js -v",
     "start": "http-server public -p 8008",
     "test": "mocha --opts ./test/mocha.opts test/tests.js"
   },
