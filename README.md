@@ -225,6 +225,7 @@ Or we can run watchify to build and watch for changes (run this in a separate te
 
 ```sh
 npm run watch
+```
 
 Then, in a new terminal window or tab, we can run the `http-server`. I've set it to run on port 8008, but you can change that on line 9 of `package.json`.
 
