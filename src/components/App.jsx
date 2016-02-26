@@ -4,6 +4,20 @@ import Board from './Board.jsx'
 
 class App extends Component {
 
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      history: []
+    }
+  }
+
+  makeMove (square) {
+    this.setState({
+      history: [ ...this.state.history, square ]
+    })
+  }
+
   render () {
     // Add the header
     return <div className='app'>
@@ -14,7 +28,7 @@ class App extends Component {
           <span className='toe'>Toe</span>
         </h1>
       </header>
-      <Board/>
+      <Board history={this.state.history} clickCb={this.makeMove.bind(this)/>
     </div>
   }
 }

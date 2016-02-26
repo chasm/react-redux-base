@@ -36,25 +36,12 @@ const winPatterns = [
 
 class Board extends Component {
 
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      history: []
-    }
-  }
-
   makeMove (square) {
-    // Here we use an alternative to Ramda's `append` function by
-    // using the new ES6 spread (...) operator
-    this.setState({
-      history: [ ...this.state.history, square ]
-    })
+    this.props.clickCb(square)
   }
 
-  // Cleaner to break out the choosing of player into its own method
   getPlayer (square, history) {
-    return (indexOf(square, history) % 2 === 0) ? 'x' : 'o' // x moves first
+    return (indexOf(square, history) % 2 === 0) ? 'x' : 'o'
   }
 
   // Now this is nice and clean
