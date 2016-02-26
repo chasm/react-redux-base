@@ -57,11 +57,11 @@ class Display extends Component {
     )
   }
 
-  componentDidUpdate (nextProps, nextState) {
+  componentDidUpdate (prevProps, prevState) {
     console.log(
       '  Display.componentDidUpdate with ' +
-      `nextProps.count == '${nextProps.count}' and ` +
-      `nextState.count == ${Object.keys(nextState || {})}`
+      `prevProps.count == '${prevProps.count}' and ` +
+      `prevState keys == ${Object.keys(prevState || {})}`
     )
   }
 
