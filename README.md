@@ -203,10 +203,16 @@ npm test
 
 And you should see one passing test. It's not very exciting, but you can build on it.
 
-We can also build our app and run watchify to watch it.
+We can also build our app.
 
 ```sh
 npm run build
+```
+
+Or we can run watchify to build and watch for changes (run this in a separate terminal tab):
+
+```sh
+npm run watch
 ```
 
 Then, in a new terminal window or tab, we can run the `http-server`. I've set it to run on port 8008, but you can change that on line 9 of `package.json`.
