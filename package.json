@@ -60,7 +60,9 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-enzyme": "^0.4.1",
     "cheerio": "^0.20.0",
+    "enzyme": "^2.0.0",
     "jsdom": "^8.0.2",
     "mocha": "^2.4.5",
     "react-addons-test-utils": "^0.14.7",
