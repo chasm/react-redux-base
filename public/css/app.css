@@ -1,8 +1,5 @@
 body {
-  background-color: white;
-  color: hsla(0, 0%, 60%, 1);
   font-family: Verdana, sans-serif;
-  font-size: 18px;
 }
 
 h1 .tic { color: hsla(0, 80%, 50%, 1); }
@@ -16,9 +13,9 @@ button:hover {
 
 header h1 {
   box-sizing: content-box;
-  font-size: 3rem;
+  font-size: 6rem;
   font-weight: normal;
-  margin: 5rem auto 1rem;
+  margin: 3rem auto ;
   text-align: center;
   width: 30rem;
 }
@@ -47,7 +44,7 @@ header h1 {
 
 .board.won > div.x,
 .board.won > div.o {
-  color: hsla(0, 0%, 90%, 1)
+  color: hsla(0, 0.0000%, 23.3333%, 1.0000)
 }
 
 .board > div.x,
@@ -63,23 +60,23 @@ header h1 {
 .board > div:nth-child(1),
 .board > div:nth-child(2),
 .board > div:nth-child(3) {
-  border-top-color: white;
+  border-top-color: hsla(0, 0.0000%, 13.3333%, 1.0000);
 }
 
 .board > div:nth-child(3),
 .board > div:nth-child(6),
 .board > div:nth-child(9) {
-  border-right-color: white;
+  border-right-color: hsla(0, 0.0000%, 13.3333%, 1.0000);
 }
 
 .board > div:nth-child(7),
 .board > div:nth-child(8),
 .board > div:nth-child(9) {
-  border-bottom-color: white;
+  border-bottom-color: hsla(0, 0.0000%, 13.3333%, 1.0000);
 }
 
 .board > div:nth-child(1),
 .board > div:nth-child(4),
 .board > div:nth-child(7) {
-  border-left-color: white;
+  border-left-color: hsla(0, 0.0000%, 13.3333%, 1.0000);
 }
