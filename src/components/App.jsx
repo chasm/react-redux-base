@@ -26,7 +26,7 @@ class App extends Component {
     // Append the square to the *moves* array inside the first game object
     // and return the entire state
     this.setState({
-      games: [ { moves: [ ...h.moves, square ] }, ...tail ]
+      games: [ { moves: [ ...h.moves, square ] }, ...t ]
     })
   }
 
