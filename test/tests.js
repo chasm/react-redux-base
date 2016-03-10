@@ -1,22 +1,25 @@
 /* global describe it */
 
 import React from 'react'
-// import ReactDOM from 'react-dom'
-// import TestUtils from 'react-addons-test-utils'
 
 import chai, { expect } from 'chai'
 import chaiEnzyme from 'chai-enzyme'
+import sinon from 'sinon'
 
 chai.use(chaiEnzyme())
 
-import { shallow } from 'enzyme' // mount, render
+import { mount, render, shallow } from 'enzyme'
 
-import App from '../src/components/app.jsx'
+import App from '../src/components/App.jsx'
+import Board from '../src/components/Board.jsx'
+import Square from '../src/components/Square.jsx'
 
-describe('<App/>', () => {
-  it('renders a div containing "App"', () => {
-    const wrapper = shallow(<App/>)
+import { getBoard, getWins } from '../src/utilities/game'
 
-    expect(wrapper.find('div.app')).to.have.className('app')
-  })
-})
+const emptyBoard = '<div class="board"><div></div><div></div><div></div><div>' +
+  '</div><div></div><div></div><div></div><div></div><div></div></div>'
+
+const winningBoard = '<div class="board won"><div class="x win">x</div>' +
+  '<div class="o">o</div><div class="x win">x</div><div class="o">o</div>' +
+  '<div class="x win">x</div><div class="o">o</div><div class="x win">x</div>' +
+  '<div class="o">o</div><div class="x win">x</div></div>'

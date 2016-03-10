@@ -1,95 +1,37 @@
 import React, { Component, PropTypes } from 'react'
 
-import { shouldComponentUpdate } from 'react-addons-pure-render-mixin'
+import { addIndex, contains, flatten, isEmpty, map } from 'ramda'
 
-import {
-  addIndex,
-  contains,
-  filter,
-  flatten,
-  indexOf,
-  isEmpty,
-  map,
-  reduce,
-  repeat,
-  update
-} from 'ramda'
+// Let's move our game utility functions out to another file to keep
+// the board file clean and focused on react
+import { getBoard, getWins } from '../utilities/game'
 
 import Square from './Square.jsx'
 
+// Ramda's map does not include the index, so we'll use addIndex to make our own
 const mapIndexed = addIndex(map)
 
-const WIN_PATTERNS = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-]
-
 class Board extends Component {
-
-  // We need a clickCb now because we're passing the move up
-  static propTypes = {
-    clickCb: PropTypes.func.isRequired
-  };
-
-  constructor (props) {
-    super(props)
-
-    this.shouldComponentUpdate = shouldComponentUpdate.bind(this)
-  }
-
-  // Instead of maintaining state here, we just pass the move on up
-  // to the App and let it be handled there.
-  makeMove (square) {
-    this.props.clickCb(square)
-  }
-
-  getPlayer (square, history) {
-    return (indexOf(square, history) % 2 === 0) ? 'x' : 'o'
-  }
-
-  getBoard (history) {
-    const initialBoard = repeat('', 9)
-
-    return reduce((board, square) => {
-      const player = this.getPlayer(square, history)
-
-      return update(square, player, board)
-    }, initialBoard, history)
-  }
-
-  getWins (board) {
-    return filter((pattern) => {
-      let s1 = board[pattern[0]]
-      let s2 = board[pattern[1]]
-      let s3 = board[pattern[2]]
-
-      return s1 && s1 === s2 && s2 === s3
-    }, WIN_PATTERNS)
-  }
-
   render () {
-    const board  = this.getBoard(this.props.history) // now it's props instead of state
-    const wins   = flatten(this.getWins(board))
-    const inPlay = isEmpty(wins)
-    const css    = inPlay ? 'board' : 'board won'
+    const { moves, clickCb } = this.props
+    const board  = getBoard(moves)          // Convert the moves to a board array
+    const wins   = flatten(getWins(board))  // Get a list of winning cells
+    const inPlay = isEmpty(wins)            // No winning cells? Still in play then
 
-    return <div className={css}>{this.renderBoard(board, wins)}</div>
-  }
+    const css = inPlay ? 'board' : 'board won' // Mark a winning board (grays out squares)
 
-  renderBoard (board, wins) {
-    return mapIndexed((player, square) => {
-
-      if (isEmpty(wins)) {
+    // Get an array of Squares by looping through the board array
+    // and mapping it to Square components
+    const squares = mapIndexed((player, square) => {
+      if (inPlay) {
+        // If played, pass the player.
+        // Else, set the callback and *bind the square number*.
+        // The callback is a closure!
         return player
           ? <Square key={square} player={player}/>
-          : <Square key={square} clickCb={this.makeMove.bind(this, square)}/>
+          : <Square key={square} clickCb={() => clickCb(square)}/>
       } else {
+        // Else, mark winning and non-winning squares (for colors)
         return <Square
           key={square}
           player={player}
@@ -97,7 +39,16 @@ class Board extends Component {
         />
       }
     }, board)
+
+    // Wrap our array of Square components in a <div> and return it.
+    // Note: we can only return ONE root element, so we must wrap the array.
+    return <div className={css}>{squares}</div>
   }
+}
+
+// Can still set prop types
+Board.propTypes = {
+  clickCb: PropTypes.func.isRequired
 }
 
 export default Board
