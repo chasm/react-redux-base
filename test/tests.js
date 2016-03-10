@@ -8,7 +8,7 @@ import sinon from 'sinon'
 
 chai.use(chaiEnzyme())
 
-import { mount, render, shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 
 import App from '../src/components/App.jsx'
 import Board from '../src/components/Board.jsx'
