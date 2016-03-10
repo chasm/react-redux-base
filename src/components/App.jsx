@@ -1,47 +1,72 @@
 import React, { Component } from 'react'
 
-import { head, tail } from 'ramda'
+import { concat, head, split } from 'ramda'
+import { v4 } from 'uuid'
 
 import Header from './Header.jsx'
 import Board from './Board.jsx'
 import ResetButton from './ResetButton.jsx'
+
+import Rebase from 're-base'
+
+const base = Rebase.createClass('https://sizzling-torch-4082.firebaseio.com/games')
 
 class App extends Component {
 
   constructor (props) {
     super(props)
 
-    // Now we can have multiple games, though we can only see the latest one (so far)
     this.state = {
-      games: [
-        { moves: [] }
-      ]
+      id: split('=', window.location.search)[1],
+      moves: []
     }
   }
 
-  makeMove (square) {
-    let h = head(this.state.games) // grab the first game off the games array
-    let t = tail(this.state.games) // grab the rest of the games array
-
-    // Append the square to the *moves* array inside the first game object
-    // and return the entire state
-    this.setState({
-      games: [ { moves: [ ...h.moves, square ] }, ...tail ]
+  componentWillMount () {
+    base.bindToState(this.state.id, {
+      context: this,
+      state: 'moves',
+      asArray: true
     })
   }
 
+  checkTurn () {
+    return (this.state.moves.length % 2) !== (this.state.player % 2)
+  }
+
+  makeMove (square) {
+    const player = (this.state.player === undefined)
+      ? this.state.moves.length + 1
+      : this.state.player
+
+    if (this.checkTurn()) {
+      this.setState({
+        moves: [ ...this.state.moves, square ],
+        player: player
+      }, () => {
+        base.post(this.state.id, {
+          data: this.state.moves,
+          then: () => {
+            console.log(this.state)
+          }
+        })
+      })
+    }
+  }
+
   newGame () {
-    // Prepend a new, empty game to the games array
-    this.setState({
-      games: [ { moves: [] }, ...this.state.games ]
-    })
+    const id = v4()
+    window.location.href = concat(
+      head(split('?', window.location.href)),
+      `?game=${id}`
+    )
   }
 
   render () {
     return <div className='app'>
       <Header/>
       <Board
-        moves={this.state.games[0].moves}
+        moves={this.state.moves}
         clickCb={this.makeMove.bind(this)}
       />
       <ResetButton clickCb={this.newGame.bind(this)}/>
