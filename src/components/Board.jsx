@@ -21,10 +21,14 @@ const Board = ({ moves }, { store }) => {
     mapIndexed((player, square) => {
       if (inPlay) {
         return player
-          ? <Square player={player}/>
-          : <Square clickCb={() => makeMove(square)}/>
+          ? <Square key={square} player={player}/>
+          : <Square key={square} clickCb={() => makeMove(square)}/>
       } else {
-        return <Square player={player} win={contains(square, wins)}/>
+        return <Square
+          key={square}
+          player={player}
+          win={contains(square, wins)}
+        />
       }
     }, board)
   }</div>

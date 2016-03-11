@@ -36,7 +36,7 @@ const game = (state = [[]], action) => {
 
 const store = createStore(
   game,
-  window.defToolsExtension ? window.devToolsExtension() : f => f
+  window.devToolsExtension ? window.devToolsExtension() : f => f
 )
 
 export default store
