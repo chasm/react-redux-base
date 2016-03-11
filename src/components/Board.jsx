@@ -1,43 +1,41 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
-import { addIndex, contains, flatten, isEmpty, map } from 'ramda'
+import { addIndex, contains, map } from 'ramda'
 
-import { getBoard, getWins } from '../utilities/game'
+import game from '../utilities/game'
 
 import Square from './Square.jsx'
 
 const mapIndexed = addIndex(map)
 
-class Board extends Component {
-  render () {
-    const { moves, clickCb } = this.props
-    const board = getBoard(moves)
-    const wins = flatten(getWins(board))
-    const inPlay = isEmpty(wins)
+const Board = ({ moves }, { store }) => {
+  const { board, wins, inPlay } = game(moves)
 
-    const css = inPlay ? 'board' : 'board won'
+  const css = inPlay ? 'board' : 'board won'
 
-    const squares = mapIndexed((player, square) => {
+  const makeMove = (square) => {
+    store.dispatch({ type: 'MOVE', square: square })
+  }
+
+  return <div className={css}>{
+    mapIndexed((player, square) => {
       if (inPlay) {
         return player
-          ? <Square key={square} player={player}/>
-          : <Square key={square} clickCb={() => clickCb(square)}/>
+          ? <Square player={player}/>
+          : <Square clickCb={() => makeMove(square)}/>
       } else {
-        return <Square
-          key={square}
-          player={player}
-          win={contains(square, wins)}
-        />
+        return <Square player={player} win={contains(square, wins)}/>
       }
     }, board)
-
-    return <div className={css}>{squares}</div>
-  }
+  }</div>
 }
 
 Board.propTypes = {
-  clickCb: PropTypes.func.isRequired,
   moves: PropTypes.array.isRequired
+}
+
+Board.contextTypes = {
+  store: PropTypes.object.isRequired
 }
 
 export default Board

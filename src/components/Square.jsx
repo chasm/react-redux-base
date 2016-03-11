@@ -1,14 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 
-class Square extends Component {
-  render () {
-    const { clickCb, player, win } = this.props
-    const css = win ? `${player} win` : player
+const Square = ({ clickCb, player, win }) => {
+  const css = win ? `${player} win` : player
 
-    return player
-      ? <div className={css}>{player}</div>
-      : <div onClick={clickCb}/>
-  }
+  return player
+    ? <div className={css}>{player}</div>
+    : <div onClick={clickCb}/>
 }
 
 Square.propTypes = {

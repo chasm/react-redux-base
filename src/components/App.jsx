@@ -1,48 +1,21 @@
-import React, { Component } from 'react'
+import React, { PropTypes } from 'react'
 
-import { head, tail } from 'ramda'
+import { head } from 'ramda'
 
 import Header from './Header.jsx'
 import Board from './Board.jsx'
-import ResetButton from './ResetButton.jsx'
+import Buttons from './Buttons.jsx'
 
-class App extends Component {
+const App = ({}, { store }) => {
+  return <div className='app'>
+    <Header/>
+    <Board moves={head(store.getState())}/>
+    <Buttons/>
+  </div>
+}
 
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      games: [
-        { moves: [] }
-      ]
-    }
-  }
-
-  makeMove (square) {
-    let h = head(this.state.games)
-    let t = tail(this.state.games)
-
-    this.setState({
-      games: [ { moves: [ ...h.moves, square ] }, ...t ]
-    })
-  }
-
-  newGame () {
-    this.setState({
-      games: [ { moves: [] }, ...this.state.games ]
-    })
-  }
-
-  render () {
-    return <div className='app'>
-      <Header/>
-      <Board
-        moves={this.state.games[0].moves}
-        clickCb={this.makeMove.bind(this)}
-      />
-      <ResetButton clickCb={this.newGame.bind(this)}/>
-    </div>
-  }
+App.contextTypes = {
+  store: PropTypes.object.isRequired
 }
 
 export default App

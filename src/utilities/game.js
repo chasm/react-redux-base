@@ -1,4 +1,4 @@
-import { filter, indexOf, reduce, repeat, update } from 'ramda'
+import { filter, flatten, indexOf, isEmpty, reduce, repeat, update } from 'ramda'
 
 const WIN_PATTERNS = [
   [0, 1, 2],
@@ -33,4 +33,10 @@ const getWins = (board) => {
   }, WIN_PATTERNS)
 }
 
-export { getBoard, getWins }
+export default (moves) => {
+  const board = getBoard(moves)
+  const wins = flatten(getWins(board))
+  const inPlay = isEmpty(wins)
+
+  return { board, wins, inPlay }
+}
