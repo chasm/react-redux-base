@@ -16,14 +16,32 @@ import Square from '../src/components/Square.jsx'
 
 import { getBoard, getWins } from '../src/utilities/game'
 
+// This is the expected `wrapper.html()` output for an empty board
 const emptyBoard = '<div class="board"><div></div><div></div><div></div><div>' +
   '</div><div></div><div></div><div></div><div></div><div></div></div>'
 
+// This is the expected `wrapper.html()` output for a winning board with the
+// following pattern:
+//
+//    x  o  x
+//    o  x  o
+//    x  o  x
+//
+// Note that x wins in two directions -- both diagonals.
+// We want to test for all our possible cases -- no wins, one win, double win.
 const winningBoard = '<div class="board won"><div class="x win">x</div>' +
   '<div class="o">o</div><div class="x win">x</div><div class="o">o</div>' +
   '<div class="x win">x</div><div class="o">o</div><div class="x win">x</div>' +
   '<div class="o">o</div><div class="x win">x</div></div>'
 
+// For the purposes of these tests, specifically those using `mount`, we've
+// used Components rather than functions for the App, Board, and Square.
+// Although the enzyme folks say that `mount` should work with functions,
+// that does not appear to be the case.
+
+// We can use `shallow` here as there would be no point using `mount` --
+// there are no subcomponents to Square.
+// What these three tests do should be obvious.
 describe('<Square/>', () => {
   it('with a player renders properly', () => {
     const wrapper = shallow(<Square player='x'/>)
@@ -47,15 +65,23 @@ describe('<Square/>', () => {
   })
 })
 
+// We probably should write more tests for the board, but here's a start.
 describe('<Board/>', () => {
   it('has a .board div with nine Squares', () => {
+    // We're not clicking on anything, so we just need to pass *some* function
+    // to the clickCb. This test uses an empty board.
     const wrapper = shallow(<Board moves={[]} clickCb={() => true}/>)
 
-    expect(wrapper.html()).to.equal(emptyBoard)
-    expect(wrapper.find(Square).length).to.equal(9)
+    // We can call `find(Square)` because we're using `shallow` (won't work with `render`)
+    expect(wrapper.html()).to.equal(emptyBoard) // checks that our HTML output is correct
+    expect(wrapper.find(Square).length).to.equal(9) // checks that there are 9 Squares
   })
 })
 
+// Again, we'd probably want to write a few more tests, but this gives you the flavor.
+// Here we `mount` the full application, then click on each Square in turn, then
+// check that our output is the winning Board above. This is a sort of integration
+// test, testing the full stack of components making up the tic-tac-toe board.
 describe('<App/>', () => {
   it('plays the game properly', () => {
     const wrapper = mount(<App/>)
@@ -74,6 +100,9 @@ describe('<App/>', () => {
   })
 })
 
+// These are essentially unit tests for our `game` utility functions
+// If you check the functions in `src/utilities/games.js`, it should be
+// pretty clear how these work.
 describe('Game utilities getBoard', () => {
   it('creates the correct board given a set of moves', () => {
     const empty = getBoard([])
