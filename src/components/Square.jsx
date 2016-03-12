@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 
+// The square doesn't change.
 const Square = ({ clickCb, player, win }) => {
   const css = win ? `${player} win` : player
 
