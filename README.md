@@ -1,5 +1,7 @@
 # react-redux-base
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/chasm/react-redux-base.svg)](https://greenkeeper.io/)
+
 A base on which to build React/Redux apps.
 
 ## Building this from scratch
